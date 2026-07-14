@@ -128,6 +128,7 @@ public class FluxPlugin extends Plugin {
             }
             if (panel.getBotmCard() != null) {
                 panel.getBotmCard().checkEventStateChanged();
+				panel.updateBotmIcon();
             }
             if (panel.getHuntCard() != null) {
                 panel.getHuntCard().checkEventStateChanged();
@@ -407,6 +408,12 @@ public class FluxPlugin extends Plugin {
                 panel.getBotmCard().checkEventStateChanged();
             }
         }
+
+		if (key.equals("botmBoss")) {
+			if (panel != null && panel.getBotmCard() != null) {
+				panel.updateBotmIcon();
+			}
+		}
 
         if (key.equals("sotw_active") || key.equals("sotwActive")) {
             if (panel != null) {

@@ -10,7 +10,6 @@ import com.flux.components.combobox.ComboBoxIconEntry;
 import com.flux.components.combobox.ComboBoxIconListRenderer;
 import com.flux.components.combobox.EntrySelect;
 import com.flux.services.CompetitionScheduler;
-import lombok.extern.slf4j.Slf4j;
 import net.runelite.client.config.ConfigManager;
 import com.flux.cards.*;
 import net.runelite.client.game.SpriteManager;
@@ -20,7 +19,6 @@ import net.runelite.client.util.ImageUtil;
 import okhttp3.OkHttpClient;
 import okhttp3.*;
 
-@Slf4j
 public class FluxPanel extends PluginPanel {
     private static final int GLOW_CHECK_INTERVAL = 500;
     private static final int SCROLL_UNIT_INCREMENT = 16;
@@ -245,7 +243,17 @@ public class FluxPanel extends PluginPanel {
         }
     }
 
-    void updateSotwIcon() {
+	void updateBotmIcon() {
+		if (botmCard == null) return;
+
+		HiscoreSkill boss = botmCard.getBoss();
+		if (boss == null) return;
+
+		spriteManager.getSpriteAsync(boss.getSpriteId(), 0, sprite ->
+			SwingUtilities.invokeLater(() -> updateEntryIcon(" BOTM", new ImageIcon(sprite))));
+	}
+
+	void updateSotwIcon() {
 		if (sotwCard == null) return;
 
 		HiscoreSkill skill = sotwCard.getSkill();
@@ -378,6 +386,7 @@ public class FluxPanel extends PluginPanel {
     public void refreshAllCards() {
         refreshHomeCard();
         refreshSotwCard();
+		refreshBotmCard();
         updateEventGlows();
     }
 
@@ -398,6 +407,14 @@ public class FluxPanel extends PluginPanel {
 			updateSotwIcon();
         }
     }
+
+	private void refreshBotmCard() {
+		if (botmCard != null) {
+			botmCard.refreshLeaderboard();
+			botmCard.updateEventTitle();
+			updateBotmIcon();
+		}
+	}
 
     public void shutdown() {
         glowTimer.stop();

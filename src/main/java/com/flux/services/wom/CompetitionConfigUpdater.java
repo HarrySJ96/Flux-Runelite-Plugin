@@ -6,10 +6,8 @@ import com.google.gson.JsonObject;
 import com.flux.services.wom.CompetitionModels.CompetitionData;
 import com.flux.services.wom.CompetitionModels.EventType;
 import com.flux.services.wom.CompetitionModels.HuntTeamData;
-import lombok.extern.slf4j.Slf4j;
 import java.util.LinkedHashMap;
 
-@Slf4j
 public class CompetitionConfigUpdater {
     private final ConfigManager configManager;
 
@@ -35,19 +33,18 @@ public class CompetitionConfigUpdater {
         switch (type) {
             case BOTM:
                 setConfigIfChanged("botmWomUrl", womUrl);
+				saveBotmBoss(data.eventTarget);
                 break;
-
             case SOTW:
                 if (data.sotwLeaderboard != null) {
                     saveSotwLeaderboard(data.sotwLeaderboard);
-					saveSotwSkill(data.sotwSkill);
+					saveSotwSkill(data.eventTarget);
                     if (!isActive && !data.sotwLeaderboard.isEmpty()) {
                         String winner = data.sotwLeaderboard.keySet().iterator().next();
                         setConfigIfChanged(prefix + "_winner", winner);
                     }
                 }
                 break;
-
             case HUNT:
                 setConfigIfChanged("hunt_wom_url", womUrl);
                 if (data.huntTeamData != null) {
@@ -80,6 +77,10 @@ public class CompetitionConfigUpdater {
 
 	private void saveSotwSkill(String skillName) {
 		setConfigIfChanged("sotwSkill", skillName);
+	}
+
+	private void saveBotmBoss(String bossName) {
+		setConfigIfChanged("botmBoss", bossName);
 	}
 
     private void saveHuntTeamData(HuntTeamData huntData) {

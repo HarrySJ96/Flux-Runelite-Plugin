@@ -144,9 +144,19 @@ public class CompetitionFinder {
                 startsAt,
                 endsAt,
                 type == EventType.SOTW ? dataParser.parseSotwLeaderboard(details) : null,
-                type == EventType.SOTW ? dataParser.parseSotwSkill(details) : null,
+				parseEventTarget(type, details),
                 null
         ));
     }
 
+	private String parseEventTarget(EventType type, JsonObject details) {
+		switch (type) {
+			case SOTW:
+				return dataParser.parseSotwSkill(details);
+			case BOTM:
+				return dataParser.parseBotmBoss(details);
+			default:
+				return null;
+		}
+	}
 }

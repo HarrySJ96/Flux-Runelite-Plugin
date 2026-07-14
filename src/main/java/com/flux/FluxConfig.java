@@ -184,6 +184,11 @@ public interface FluxConfig extends Config {
         return "[]";
     }
 
+	@ConfigItem(keyName = "botmBoss", name = "BOTM Boss", description = "Current BOTM Boss", section = overlaySection, hidden = true)
+	default String botmBoss() {
+		return "Vorkath";
+	}
+
     @ConfigItem(position = 43, keyName = "botmWomUrl", name = "BOTM WOM URL", description = "BOTM wise old man URL.", section = overlaySection, hidden = true)
     default String botmWomUrl() {
         return "https://wiseoldman.net/groups/141/competitions";

@@ -70,6 +70,20 @@ public class CompetitionDataParser {
 		return skillName;
 	}
 
+	public String parseBotmBoss(JsonObject competitionDetails)
+	{
+		String bossName = Strings.EMPTY;
+		try {
+			bossName = competitionDetails.has("metric")
+				? competitionDetails.getAsJsonPrimitive("metric").getAsString()
+				: Strings.EMPTY;
+			log.debug("BOTM boss name: {}", bossName);
+		} catch (Exception e) {
+			log.error("Error parsing BOTM boss name: {}", String.valueOf(e));
+		}
+		return bossName;
+	}
+
     // Parses Hunt team data from competition JSON payload.
     public HuntTeamData parseHuntTeamData(JsonObject competitionDetails) {
         try {
