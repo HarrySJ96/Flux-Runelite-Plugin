@@ -24,11 +24,11 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 package com.flux.components.combobox;
+
+import java.util.Optional;
 import javax.swing.Icon;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
-import java.util.Optional;
 
 /**
  * Used with ComboBoxListRenderer to render an icon next to the text of the list entry.
@@ -36,10 +36,9 @@ import java.util.Optional;
  */
 @AllArgsConstructor
 @Getter
-public class ComboBoxIconEntry
-{
-    private Icon icon;
-    private String text;
-    private Optional<String> id;  // rename from data to id
+public class ComboBoxIconEntry {
+	private Icon icon;
+	private String text;
+	private Optional<String> id;  // rename from data to id
 }
 
